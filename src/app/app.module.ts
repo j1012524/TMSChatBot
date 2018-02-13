@@ -6,7 +6,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { EmojiProvider } from '../providers/emoji';
+import { AppSettings } from '../providers/app-settings';
 import { HttpClientModule } from "@angular/common/http";
+import { InterceptorModule } from '../providers/interceptor.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { HttpClientModule } from "@angular/common/http";
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AppSettings,
+    InterceptorModule,
     EmojiProvider
   ]
 })

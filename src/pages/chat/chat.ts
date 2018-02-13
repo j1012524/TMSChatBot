@@ -83,7 +83,7 @@ export class Chat {
     sendMsg() {
         if (!this.editorMsg.trim()) return;
 
-        // Mock message
+        // // Mock message
         const id = Date.now().toString();
         let newMsg: ChatMessage = {
             messageId: Date.now().toString(),
@@ -97,19 +97,42 @@ export class Chat {
         };
 
         this.pushNewMsg(newMsg);
-        this.editorMsg = '';
 
         if (!this.showEmojiPicker) {
             this.messageInput.setFocus();
         }
 
-        this.chatService.sendMsg(newMsg)
-        .then(() => {
-            let index = this.getMsgIndexById(id);
-            if (index !== -1) {
-                this.msgList[index].status = 'success';
-            }
-        })
+        // this.chatService.sendMsg(newMsg)
+        // .then(() => {
+        //     let index = this.getMsgIndexById(id);
+        //     if (index !== -1) {
+        //         this.msgList[index].status = 'success';
+        //     }
+        // })
+
+        this.chatService.sendChatMessage(this.editorMsg)
+          .subscribe((msg:any) => {
+            let newMsg: ChatMessage = {
+                messageId: Date.now().toString(),
+                userId: this.user.id,
+                userName: this.user.name,
+                userAvatar: this.user.avatar,
+                toUserId: this.toUser.id,
+                time: Date.now(),
+                message: msg.response.result.fulfillment.speech,
+                status: 'pending'
+            };
+            this.chatService.sendMsg(newMsg)
+            .then(() => {
+                let index = this.getMsgIndexById(id);
+                if (index !== -1) {
+                    this.msgList[index].status = 'success';
+                }
+            })
+            console.log(`Respone: ${msg}`);
+          });
+
+        this.editorMsg = '';
     }
 
     /**

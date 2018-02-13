@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Events } from 'ionic-angular';
-import { map } from 'rxjs/operators/map';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
+import { catchError, map, tap } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
+
+import { AppSettings } from './app-settings';
 
 export class ChatMessage {
     messageId: string;
@@ -25,15 +28,18 @@ export class UserInfo {
 export class ChatService {
 
     constructor(private http: HttpClient,
-                private events: Events) {
+                private events: Events,
+                public appSettings: AppSettings) {
     }
+
+    appUrl = this.appSettings.getApiUrl();
 
     mockNewMsg(msg) {
         const mockMsg: ChatMessage = {
             messageId: Date.now().toString(),
             userId: '210000198410281948',
             userName: 'Hancock',
-            userAvatar: './assets/to-user.jpg',
+            userAvatar: './assets/imgs/to-user.jpg',
             toUserId: '140000198202211138',
             time: Date.now(),
             message: msg.message,
@@ -60,9 +66,54 @@ export class ChatService {
         const userInfo: UserInfo = {
             id: '140000198202211138',
             name: 'Luff',
-            avatar: './assets/user.jpg'
+            avatar: './assets/imgs/user.jpg'
         };
         return new Promise(resolve => resolve(userInfo));
+    }
+
+    sendChatMessage(message: any): Observable<String> {
+      const httpOptions = {
+      headers: new HttpHeaders({
+          'Content-Type':  'application/json'
+        })
+      };
+
+      const hero = {
+      	"text":message,
+      	"clientAccessToken": "8cbd81204d6c4ecda54dd1c97f5fad04",
+      	"sessionID": "1233455"
+      };
+
+      return this.http.post<any>(this.appUrl+'chats', hero, httpOptions)
+        .pipe(
+          tap((hero: any) => this.log(`added hero`)),
+          catchError(this.handleError<any>('addHero', hero))
+        );
+    }
+
+      /**
+     * Handle Http operation that failed.
+     * Let the app continue.
+     * @param operation - name of the operation that failed
+     * @param result - optional value to return as the observable result
+     */
+    private handleError<T> (operation = 'operation', result?: T) {
+      return (error: any): Observable<T> => {
+
+        // TODO: send the error to remote logging infrastructure
+      //  console.error(error); // log to console instead
+
+        // TODO: better job of transforming error for user consumption
+        //this.log(`${operation} failed: ${error.message}`);
+
+        // Let the app keep running by returning an empty result.
+        return of(result as T);
+      };
+    }
+
+    /** Log a HeroService message with the MessageService */
+    private log(message: string) {
+      //this.messageService.add('HeroService: ' + message);
     }
 
 }
