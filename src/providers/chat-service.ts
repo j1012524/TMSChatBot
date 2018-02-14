@@ -62,6 +62,11 @@ export class ChatService {
         .then(() => this.mockNewMsg(msg));
     }
 
+    sendSpeechTextMsg(msg: string) {
+        return new Promise(resolve => setTimeout(() => resolve(msg), Math.random() * 1000))
+        .then(() => this.mockNewMsg(msg));
+    }
+
     getUserInfo(): Promise<UserInfo> {
         const userInfo: UserInfo = {
             id: '140000198202211138',

@@ -48,11 +48,28 @@
                               (ionFocus)="onFocus()">
                 </ion-textarea>
             </ion-col>
-            <ion-col col-2>
+            <ion-col col-1>
                 <button ion-button clear icon-only item-right (click)="sendMsg()">
                     <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
                 </button>
             </ion-col>
+            <ion-col col-1>
+                <button ion-button clear icon-only item-right (click) = "listen($event)" >
+                    <ion-icon name="ios-mic" ios="ios-mic" md="md-mic"></ion-icon>
+                </button>
+            </ion-col>
+            <page-popover [result]=isListening (selectedOption)="receiveMessage($event)">page-popover</page-popover>
+            <!-- <ion-content padding>
+              <button ion-button color="primary" full (click) = "SpeechToText()"  [disabled]="isRecognizing">
+                <ion-icon name="mic"></ion-icon>
+              </button>
+
+              <ion-list inset>
+                <ion-item *ngFor="let words of matches">{{words}}</ion-item>
+              </ion-list>
+
+
+            </ion-content> -->
         </ion-row>
     </ion-grid>
     <emoji-picker *ngIf="showEmojiPicker" [(ngModel)]="editorMsg"></emoji-picker>

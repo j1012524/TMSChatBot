@@ -1,7 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavParams } from 'ionic-angular';
 import { Events, Content, TextInput } from 'ionic-angular';
+import { PopoverController } from 'ionic-angular';
+import { ToastController  } from 'ionic-angular';
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
+import {  NgZone } from '@angular/core';
 import { ChatService, ChatMessage, UserInfo } from "../../providers/chat-service";
+//import { PopoverPage } from './PopoverPage';
+import { PopoverPage } from '../popover/popover';
 
 @IonicPage()
 @Component({
@@ -17,10 +23,16 @@ export class Chat {
     toUser: UserInfo;
     editorMsg = '';
     showEmojiPicker = false;
+    isListening: boolean = false;
+    matches: Array<String>;
 
     constructor(navParams: NavParams,
                 private chatService: ChatService,
-                private events: Events,) {
+                private events: Events,
+                private speech: SpeechRecognition,
+                private zone: NgZone,
+                public toastCtrl: ToastController,
+                public popoverCtrl: PopoverController) {
         // Get the navParams toUserId parameter
         this.toUser = {
             id: navParams.get('toUserId'),
@@ -135,6 +147,12 @@ export class Chat {
         this.editorMsg = '';
     }
 
+    receiveMessage($event: string) {
+      console.log(`Event is ${event}`);
+      this.editorMsg = $event;
+      this.sendMsg();
+    }
+
     /**
      * @name pushNewMsg
      * @param msg
@@ -162,4 +180,73 @@ export class Chat {
             }
         }, 400)
     }
+
+    async hasPermission():Promise<boolean> {
+      try {
+        const permission = await this.speech.hasPermission();
+        console.log(permission);
+
+        return permission;
+      } catch(e) {
+        console.log(e);
+      }
+    }
+
+    async getPermission():Promise<void> {
+      try {
+        this.speech.requestPermission();
+      } catch(e) {
+        console.log(e);
+      }
+    }
+
+    listen(myEvent): void {
+      console.log('listen action triggered');
+      this.speech.hasPermission()
+        .then((hasPermission: boolean) => {
+          console.log(hasPermission);
+          if(!hasPermission) {
+            this.speech.requestPermission()
+                .then(
+                  () => console.log('Granted'),
+                  () => console.log('Denied')
+                )
+          }
+        })
+      if (this.isListening) {
+        this.speech.stopListening();
+        this.toggleListenMode();
+        return;
+      }
+
+      this.presentToast('listening...');
+
+      this.toggleListenMode();
+      let this_new = this;
+
+      this.speech.startListening()
+        .subscribe(matches => {
+          this_new.zone.run(() => {
+            this_new.matches = matches;
+            let popover = this.popoverCtrl.create(PopoverPage, {page: matches});
+            popover.present({
+              ev: myEvent
+            });
+          })
+        }, error => console.log(error));
+    }
+
+    toggleListenMode():void {
+      this.isListening = this.isListening ? false : true;
+      console.log('listening mode is now : ' + this.isListening);
+    }
+
+    presentToast(message) {
+	    let toast = this.toastCtrl.create({
+	      message: message,
+	      position : "middle",
+        duration: 3000
+	    });
+	    toast.present();
+	  }
 }
