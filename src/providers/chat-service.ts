@@ -97,7 +97,7 @@ export class ChatService {
 
       const hero = {
       	"text":message,
-      	"clientAccessToken": "8cbd81204d6c4ecda54dd1c97f5fad04",
+      	"clientAccessToken": "a3d30392a9a8442487b3d7593e6c1b7b",
       	"sessionID": "1233455"
       };
 
