@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Events } from 'ionic-angular';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
 import { AppSettings } from './app-settings';
@@ -26,6 +26,8 @@ export class UserInfo {
 
 @Injectable()
 export class ChatService {
+
+    msgList: ChatMessage[] = [];
 
     constructor(private http: HttpClient,
                 private events: Events,
@@ -51,10 +53,20 @@ export class ChatService {
         }, Math.random() * 1800)
     }
 
-    getMsgList(): Observable<ChatMessage[]> {
-        const msgListUrl = './assets/mock/msg-list.json';
-        return this.http.get<any>(msgListUrl)
-          .pipe(map(response => response.array));
+    addMessage(msg: ChatMessage) {
+        this.msgList.push(msg);
+    }
+
+    getAllMessages() {
+        return this.msgList;
+    }
+
+    updateStatusMessage(index: number, newStatus: string) {
+        this.msgList[index].status = 'success';
+    }
+
+    getMsgIndexById(id: string) {
+        return this.msgList.findIndex(e => e.messageId === id)
     }
 
     sendMsg(msg: ChatMessage) {
@@ -62,9 +74,9 @@ export class ChatService {
         .then(() => this.mockNewMsg(msg));
     }
 
-    sendSpeechTextMsg(msg: string) {
+    sendSpeechTextMsg(msg: ChatMessage) {
         return new Promise(resolve => setTimeout(() => resolve(msg), Math.random() * 1000))
-        .then(() => this.mockNewMsg(msg));
+        .then(() => this.events.publish('chat:received', msg, Date.now()));
     }
 
     getUserInfo(): Promise<UserInfo> {

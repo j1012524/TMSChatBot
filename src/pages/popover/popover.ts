@@ -33,8 +33,19 @@ export class PopoverPage {
   }
 
   itemSelected(option: string) {
-    console.log(`selected option is ${option}`);
-    this.messageEvent.emit(option);
+    //console.log(`selected option is ${option}`);
+    //this.messageEvent.emit(option);
+    let newSelectedMsg: ChatMessage = {
+        messageId: Date.now().toString(),
+        userId: '140000198202211138',
+        userName: 'Luff',
+        userAvatar: './assets/imgs/user.jpg',
+        toUserId: '210000198410281948',
+        time: Date.now(),
+        message: option,
+        status: 'success'
+    };
+    this.chatService.sendSpeechTextMsg(newSelectedMsg);
     this.chatService.sendChatMessage(option)
       .subscribe((msg:any) => {
         let newMsg: ChatMessage = {

@@ -6,7 +6,6 @@ import { ToastController  } from 'ionic-angular';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import {  NgZone } from '@angular/core';
 import { ChatService, ChatMessage, UserInfo } from "../../providers/chat-service";
-//import { PopoverPage } from './PopoverPage';
 import { PopoverPage } from '../popover/popover';
 
 @IonicPage()
@@ -51,13 +50,12 @@ export class Chat {
     }
 
     ionViewDidEnter() {
-        //get message list
-        this.getMsg();
-
         // Subscribe to received  new message events
         this.events.subscribe('chat:received', msg => {
             this.pushNewMsg(msg);
         })
+
+        this.msgList = this.chatService.getAllMessages();
     }
 
     onFocus() {
@@ -75,23 +73,6 @@ export class Chat {
         this.scrollToBottom();
     }
 
-    /**
-     * @name getMsg
-     * @returns {Promise<ChatMessage[]>}
-     */
-    private getMsg() {
-        // Get mock message list
-        return this.chatService
-        .getMsgList()
-        .subscribe(res => {
-            this.msgList = res;
-            this.scrollToBottom();
-        });
-    }
-
-    /**
-     * @name sendMsg
-     */
     sendMsg() {
         if (!this.editorMsg.trim()) return;
 
@@ -114,14 +95,6 @@ export class Chat {
             this.messageInput.setFocus();
         }
 
-        // this.chatService.sendMsg(newMsg)
-        // .then(() => {
-        //     let index = this.getMsgIndexById(id);
-        //     if (index !== -1) {
-        //         this.msgList[index].status = 'success';
-        //     }
-        // })
-
         this.chatService.sendChatMessage(this.editorMsg)
           .subscribe((msg:any) => {
             let newMsg: ChatMessage = {
@@ -136,9 +109,9 @@ export class Chat {
             };
             this.chatService.sendMsg(newMsg)
             .then(() => {
-                let index = this.getMsgIndexById(id);
+                let index = this.chatService.getMsgIndexById(id);
                 if (index !== -1) {
-                    this.msgList[index].status = 'success';
+                    this.chatService.updateStatusMessage(index, 'success');
                 }
             })
             console.log(`Respone: ${msg}`);
@@ -153,24 +126,16 @@ export class Chat {
       this.sendMsg();
     }
 
-    /**
-     * @name pushNewMsg
-     * @param msg
-     */
     pushNewMsg(msg: ChatMessage) {
         const userId = this.user.id,
               toUserId = this.toUser.id;
         // Verify user relationships
         if (msg.userId === userId && msg.toUserId === toUserId) {
-            this.msgList.push(msg);
+            this.chatService.addMessage(msg);
         } else if (msg.toUserId === userId && msg.userId === toUserId) {
-            this.msgList.push(msg);
+            this.chatService.addMessage(msg);
         }
         this.scrollToBottom();
-    }
-
-    getMsgIndexById(id: string) {
-        return this.msgList.findIndex(e => e.messageId === id)
     }
 
     scrollToBottom() {
