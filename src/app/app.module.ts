@@ -10,9 +10,9 @@ import { EmojiProvider } from '../providers/emoji';
 import { AppSettings } from '../providers/app-settings';
 import { HttpClientModule } from "@angular/common/http";
 import { InterceptorModule } from '../providers/interceptor.module';
-//import { PopoverPage } from '../pages/chat/PopoverPage';
 import { ChatModule } from '../pages/chat/chat.module';
 import { PopoverPageModule } from '../pages/popover/popover.module';
+import { UserService } from '../providers/user-service';
 
 @NgModule({
   declarations: [
@@ -32,8 +32,7 @@ import { PopoverPageModule } from '../pages/popover/popover.module';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    //PopoverPage
+    MyApp
   ],
   providers: [
     StatusBar,
@@ -42,7 +41,8 @@ import { PopoverPageModule } from '../pages/popover/popover.module';
     AppSettings,
     InterceptorModule,
     EmojiProvider,
-    SpeechRecognition
+    SpeechRecognition,
+    UserService
   ]
 })
 export class AppModule {}

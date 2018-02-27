@@ -5,14 +5,11 @@ import {ChatService} from "../../providers/chat-service";
 import {RelativeTime} from "../../pipes/relative-time";
 import {EmojiPickerComponentModule} from "../../components/emoji-picker/emoji-picker.module";
 import {EmojiProvider} from "../../providers/emoji";
-//import { PopoverPage } from './PopoverPage';
-//import { PopoverPage } from '../popover/popover';
 
 @NgModule({
   declarations: [
     Chat,
-    RelativeTime,
-  //  PopoverPage
+    RelativeTime
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -21,12 +18,8 @@ import {EmojiProvider} from "../../providers/emoji";
     EmojiPickerComponentModule,
     IonicPageModule.forChild(Chat),
   ],
-  entryComponents: [
-    //PopoverPage
-  ],
   exports: [
-    Chat,
-    //PopoverPage
+    Chat
   ],
   providers:[
     ChatService,

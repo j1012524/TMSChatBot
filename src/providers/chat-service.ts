@@ -6,6 +6,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
 import { AppSettings } from './app-settings';
+import { UserService } from "./user-service";
 
 export class ChatMessage {
     messageId: string;
@@ -31,7 +32,8 @@ export class ChatService {
 
     constructor(private http: HttpClient,
                 private events: Events,
-                public appSettings: AppSettings) {
+                public appSettings: AppSettings,
+                public userService: UserService) {
     }
 
     appUrl = this.appSettings.getApiUrl();
@@ -98,7 +100,8 @@ export class ChatService {
       const hero = {
       	"text":message,
       	"clientAccessToken": "a3d30392a9a8442487b3d7593e6c1b7b",
-      	"sessionID": "1233455"
+      	"sessionID": "1233455",
+        "userRole": this.userService.getUserRoleType()
       };
 
       return this.http.post<any>(this.appUrl+'chats', hero, httpOptions)

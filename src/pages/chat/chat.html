@@ -2,6 +2,7 @@
 
     <ion-navbar>
         <ion-title>{{toUser.name}}</ion-title>
+        <button ion-button class="logout" (click)= "backToUser()" round small>Logout</button>
     </ion-navbar>
 
 </ion-header>
@@ -19,7 +20,8 @@
             <div class="msg-detail">
                 <div class="msg-info">
                     <p>
-                        {{msg.userName}}&nbsp;&nbsp;&nbsp;{{msg.time | relativeTime}}</p>
+                        {{msg.userName}}&nbsp;&nbsp;&nbsp;{{msg.time | relativeTime}}
+                    </p>
                 </div>
                 <div class="msg-content">
                     <span class="triangle"></span>
@@ -59,17 +61,6 @@
                 </button>
             </ion-col>
             <page-popover [result]=isListening (selectedOption)="receiveMessage($event)">page-popover</page-popover>
-            <!-- <ion-content padding>
-              <button ion-button color="primary" full (click) = "SpeechToText()"  [disabled]="isRecognizing">
-                <ion-icon name="mic"></ion-icon>
-              </button>
-
-              <ion-list inset>
-                <ion-item *ngFor="let words of matches">{{words}}</ion-item>
-              </ion-list>
-
-
-            </ion-content> -->
         </ion-row>
     </ion-grid>
     <emoji-picker *ngIf="showEmojiPicker" [(ngModel)]="editorMsg"></emoji-picker>

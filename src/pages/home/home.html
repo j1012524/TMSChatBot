@@ -1,20 +1,18 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title>JDA</ion-title>
+    <button ion-button class="logout" (click)= "backToUser()" round small>Logout</button>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-
   <ion-list>
-
-    <ion-item navPush="Chat"
-              [navParams]="toUser">
+    <ion-item (click)="chatPage($event)">
       <ion-avatar item-left>
         <img src="./assets/imgs/to-user.jpg">
       </ion-avatar>
-      <h2>Hancock</h2>
-      <p>If at first you don’t succeed, call it version 1.0</p>
+      <h2>Transportation Manager</h2>
+      <p>ChatBot</p>
     </ion-item>
   </ion-list>
 </ion-content>

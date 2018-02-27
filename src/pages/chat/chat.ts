@@ -1,11 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from 'ionic-angular';
+import { IonicPage, NavParams, App } from 'ionic-angular';
 import { Events, Content, TextInput } from 'ionic-angular';
 import { PopoverController } from 'ionic-angular';
 import { ToastController  } from 'ionic-angular';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import {  NgZone } from '@angular/core';
 import { ChatService, ChatMessage, UserInfo } from "../../providers/chat-service";
+import { UserService } from "../../providers/user-service";
 import { PopoverPage } from '../popover/popover';
 
 @IonicPage()
@@ -28,10 +29,12 @@ export class Chat {
     constructor(navParams: NavParams,
                 private chatService: ChatService,
                 private events: Events,
+                public appCtrl: App,
                 private speech: SpeechRecognition,
                 private zone: NgZone,
                 public toastCtrl: ToastController,
-                public popoverCtrl: PopoverController) {
+                public popoverCtrl: PopoverController,
+                public userService: UserService) {
         // Get the navParams toUserId parameter
         this.toUser = {
             id: navParams.get('toUserId'),
@@ -53,9 +56,8 @@ export class Chat {
         // Subscribe to received  new message events
         this.events.subscribe('chat:received', msg => {
             this.pushNewMsg(msg);
+            this.msgList = this.chatService.getAllMessages();
         })
-
-        this.msgList = this.chatService.getAllMessages();
     }
 
     onFocus() {
@@ -214,4 +216,9 @@ export class Chat {
 	    });
 	    toast.present();
 	  }
+
+    backToUser() {
+      this.userService.setUserRoleType('');
+      this.appCtrl.getRootNav().popToRoot();
+    }
 }

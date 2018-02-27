@@ -1,0 +1,41 @@
+<!--
+  Generated template for the UserPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>JDA</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="user-card-image">
+  <ion-card (click)="nextPage($event, 'customer')">
+    <img class="driver-image" src="./assets/imgs/customer.jpg"/>
+    <ion-card-content>
+      <ion-card-title>
+        Customer
+      </ion-card-title>
+      <p>
+        User-VENTURE
+      </p>
+    </ion-card-content>
+  </ion-card>
+  <ion-card (click)="nextPage($event, 'driver')">
+    <div>
+      <img class="driver-image" src="./assets/imgs/driver.png"/>
+    </div>
+    <ion-card-content>
+      <ion-card-title>
+        Driver
+      </ion-card-title>
+      <p>
+        User-MOBDRVR
+      </p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

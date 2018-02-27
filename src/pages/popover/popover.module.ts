@@ -14,6 +14,8 @@ import { PopoverPage } from './popover';
   ],
   exports: [
     PopoverPage
+  ],
+  providers:[
   ]
 })
 export class PopoverPageModule {}
