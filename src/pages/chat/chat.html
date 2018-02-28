@@ -2,7 +2,7 @@
 
     <ion-navbar>
         <ion-title>{{toUser.name}}</ion-title>
-        <button ion-button class="logout" (click)= "backToUser()" round small>Logout</button>
+        <button ion-button class="logout" (click)= "backToUser()" small>Logout</button>
     </ion-navbar>
 
 </ion-header>
@@ -37,11 +37,11 @@
 <ion-footer no-border [style.height]="showEmojiPicker ? '255px' : '55px'">
     <ion-grid class="input-wrap">
         <ion-row>
-            <ion-col col-2>
+            <!-- <ion-col col-2>
                 <button ion-button clear icon-only item-right (click)="switchEmojiPicker()">
                     <ion-icon name="md-happy"></ion-icon>
                 </button>
-            </ion-col>
+            </ion-col> -->
             <ion-col col-8>
                 <ion-textarea #chat_input
                               placeholder="Text Input"
@@ -50,12 +50,12 @@
                               (ionFocus)="onFocus()">
                 </ion-textarea>
             </ion-col>
-            <ion-col col-1>
+            <ion-col col-2>
                 <button ion-button clear icon-only item-right (click)="sendMsg()">
                     <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
                 </button>
             </ion-col>
-            <ion-col col-1>
+            <ion-col col-2>
                 <button ion-button clear icon-only item-right (click) = "listen($event)" >
                     <ion-icon name="ios-mic" ios="ios-mic" md="md-mic"></ion-icon>
                 </button>

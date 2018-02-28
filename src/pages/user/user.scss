@@ -1,9 +1,21 @@
 page-user {
 
+  .toolbar-background {
+    background-color: #00bfff !important;
+  }
+
+  .toolbar-title-md {
+    color:white;
+  }
+
   .user-card-image {
     ion-card {
       position: relative;
       text-align: center;
+      //width: calc(100% - 200px);
+      margin-left: 100px;
+      height: 200px;
+      width: 200px;
     }
 
     .ion-card-title {

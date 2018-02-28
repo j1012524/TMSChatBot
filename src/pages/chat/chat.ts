@@ -219,6 +219,7 @@ export class Chat {
 
     backToUser() {
       this.userService.setUserRoleType('');
+      this.chatService.clearChatMessageList();
       this.appCtrl.getRootNav().popToRoot();
     }
 }

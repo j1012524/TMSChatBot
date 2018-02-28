@@ -14,6 +14,7 @@ import { UserService } from "../../providers/user-service";
 export class UserPage {
 
   toUser : {toUserId: string, toUserName: string};
+  //fromUser : {};
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -21,7 +22,7 @@ export class UserPage {
               public userService: UserService) {
       this.toUser = {
         toUserId:'210000198410281948',
-        toUserName:'Hancock'
+        toUserName:'Optimus'
       }
   }
 

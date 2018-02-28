@@ -63,6 +63,10 @@ export class ChatService {
         return this.msgList;
     }
 
+    clearChatMessageList() {
+      this.msgList = [];
+    }
+
     updateStatusMessage(index: number, newStatus: string) {
         this.msgList[index].status = 'success';
     }
