@@ -25,6 +25,7 @@ export class Chat {
     showEmojiPicker = false;
     isListening: boolean = false;
     matches: Array<String>;
+    userRole: String = '';
 
     constructor(navParams: NavParams,
                 private chatService: ChatService,
@@ -40,10 +41,11 @@ export class Chat {
             id: navParams.get('toUserId'),
             name: navParams.get('toUserName')
         };
-        // Get mock user information
+
+        //Get mock user information
         this.chatService.getUserInfo()
         .then((res) => {
-            this.user = res
+            this.user = res;
         });
     }
 

@@ -14,7 +14,7 @@ import { UserService } from "../../providers/user-service";
 export class UserPage {
 
   toUser : {toUserId: string, toUserName: string};
-  //fromUser : {};
+  fromUser : {fromUserId: string, fromUserName: string};
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -32,13 +32,7 @@ export class UserPage {
 
   nextPage(event, userType) {
     //this.appCtrl.getRootNav().push(TabsPage, {event, userType});
-    if(userType == 'customer') {
-      this.toUser.toUserName = 'VENTURE';
-    }
-    else if(userType == 'driver') {
-      this.toUser.toUserName = 'MOBDRVR';
-    }
-    this.userService.setUserRoleType(this.toUser.toUserName);
+    this.userService.setUserRoleType(userType);
     this.appCtrl.getRootNav().push(Chat, this.toUser);
   }
 

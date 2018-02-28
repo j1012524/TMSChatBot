@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 import { ChatService, ChatMessage } from "../../providers/chat-service";
+import { UserService } from '../../providers/user-service';
 
 /**
  * Generated class for the PopoverPage page.
@@ -23,7 +24,8 @@ export class PopoverPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public viewCtrl: ViewController,
-              private chatService: ChatService) {
+              private chatService: ChatService,
+              public userService: UserService) {
     console.log(navParams.get('page'));
     this.options = navParams.get('page');
   }
@@ -45,13 +47,21 @@ export class PopoverPage {
         message: option,
         status: 'success'
     };
+    if(this.userService.getUserRoleType() == 'customer') {
+      newSelectedMsg.userName = 'VENTURE';
+      newSelectedMsg.userAvatar = './assets/imgs/customer.jpg'
+    }
+    else if(this.userService.getUserRoleType() == 'driver') {
+      newSelectedMsg.userName = 'MOBDRVR';
+      newSelectedMsg.userAvatar = './assets/imgs/driver.png'
+    }
     this.chatService.sendSpeechTextMsg(newSelectedMsg);
     this.chatService.sendChatMessage(option)
       .subscribe((msg:any) => {
         let newMsg: ChatMessage = {
             messageId: Date.now().toString(),
             userId: '210000198410281948',
-            userName: 'Hancock',
+            userName: 'Optimus',
             userAvatar: './assets/imgs/to-user.jpg',
             toUserId: '140000198202211138',
             time: Date.now(),

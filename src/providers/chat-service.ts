@@ -42,7 +42,7 @@ export class ChatService {
         const mockMsg: ChatMessage = {
             messageId: Date.now().toString(),
             userId: '210000198410281948',
-            userName: 'Hancock',
+            userName: 'OPTIMUS',
             userAvatar: './assets/imgs/to-user.jpg',
             toUserId: '140000198202211138',
             time: Date.now(),
@@ -86,11 +86,25 @@ export class ChatService {
     }
 
     getUserInfo(): Promise<UserInfo> {
-        const userInfo: UserInfo = {
+        let userInfo: UserInfo = {
             id: '140000198202211138',
             name: 'Luff',
             avatar: './assets/imgs/user.jpg'
         };
+        if(this.userService.getUserRoleType() == 'customer') {
+          userInfo = {
+              id: '140000198202211138',
+              name: 'VENTURE',
+              avatar: './assets/imgs/customer.jpg'
+          };
+        }
+        else if(this.userService.getUserRoleType() == 'driver') {
+          userInfo = {
+              id: '140000198202211138',
+              name: 'MOBDRVR',
+              avatar: './assets/imgs/driver.png'
+          };
+        }
         return new Promise(resolve => resolve(userInfo));
     }
 
