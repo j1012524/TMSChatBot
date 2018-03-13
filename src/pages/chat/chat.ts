@@ -8,6 +8,7 @@ import {  NgZone } from '@angular/core';
 import { ChatService, ChatMessage, UserInfo } from "../../providers/chat-service";
 import { UserService } from "../../providers/user-service";
 import { PopoverPage } from '../popover/popover';
+import { MapPage } from '../map/map';
 
 @IonicPage()
 @Component({
@@ -18,6 +19,7 @@ export class Chat {
 
     @ViewChild(Content) content: Content;
     @ViewChild('chat_input') messageInput: TextInput;
+
     msgList: ChatMessage[] = [];
     user: UserInfo;
     toUser: UserInfo;
@@ -223,5 +225,10 @@ export class Chat {
       this.userService.setUserRoleType('');
       this.chatService.clearChatMessageList();
       this.appCtrl.getRootNav().popToRoot();
+    }
+
+    mapsPage(location) {
+      console.log(location);
+      this.appCtrl.getRootNav().push(MapPage, location);
     }
 }

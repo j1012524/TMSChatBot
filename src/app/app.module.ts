@@ -13,10 +13,11 @@ import { InterceptorModule } from '../providers/interceptor.module';
 import { ChatModule } from '../pages/chat/chat.module';
 import { PopoverPageModule } from '../pages/popover/popover.module';
 import { UserService } from '../providers/user-service';
+import { MapPageModule } from '../pages/map/map.module'
 
 @NgModule({
   declarations: [
-    MyApp,
+    MyApp
     //PopoverPage
   ],
   imports: [
@@ -24,6 +25,7 @@ import { UserService } from '../providers/user-service';
     HttpClientModule,
     ChatModule,
     PopoverPageModule,
+    MapPageModule,
     IonicModule.forRoot(MyApp, {
       tabsHideOnSubPages:true,
       tabsLayout:'icon-left',
