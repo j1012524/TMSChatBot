@@ -118,7 +118,7 @@ export class ChatService {
       const hero = {
       	"text":message,
       	"clientAccessToken": "a3d30392a9a8442487b3d7593e6c1b7b",
-      	"sessionID": "1233455",
+      	"sessionID": this.userService.getUserSessionId(),
         "userRole": this.userService.getUserRoleType()
       };
 

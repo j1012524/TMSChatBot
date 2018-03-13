@@ -32,7 +32,9 @@ export class UserPage {
 
   nextPage(event, userType) {
     //this.appCtrl.getRootNav().push(TabsPage, {event, userType});
+    let sessionID = Math.floor((Math.random() * 10000000) + 1).toString();
     this.userService.setUserRoleType(userType);
+    this.userService.setUserSessionId(sessionID);
     this.appCtrl.getRootNav().push(Chat, this.toUser);
   }
 

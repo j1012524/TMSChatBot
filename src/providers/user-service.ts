@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 export class UserService {
 
   userRoleType: String = '';
+  userSessionId: String = '';
 
   constructor() {
     //console.log('Hello UserServiceTsProvider Provider');
@@ -15,6 +16,14 @@ export class UserService {
 
   getUserRoleType() {
       return this.userRoleType;
+  }
+
+  setUserSessionId(sessionId: string) {
+    this.userSessionId = sessionId;
+  }
+
+  getUserSessionId() {
+    return this.userSessionId;
   }
 
 }
