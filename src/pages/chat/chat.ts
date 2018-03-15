@@ -229,6 +229,6 @@ export class Chat {
 
     mapsPage(location) {
       console.log(location);
-      this.appCtrl.getRootNav().push(MapPage, location);
+      this.appCtrl.getRootNav().push(MapPage, {loc:location});
     }
 }

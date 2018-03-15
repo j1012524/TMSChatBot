@@ -25,6 +25,17 @@ page-chat {
     white-space: pre-line;
   }
 
+  .map-button {
+    background-color: white;
+    height:100px;
+    padding: 0;
+  }
+
+  .map-button-image {
+    height:100px;
+    width:100px;
+  }
+
   .input-wrap {
     padding: 0 5px;
     ion-textarea {

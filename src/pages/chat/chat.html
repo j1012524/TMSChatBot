@@ -25,13 +25,15 @@
               <span class="triangle"></span>
               <p class="line-breaker ">{{msg.message}}</p>
           </div> -->
-          <div class="msg-content" *ngIf="msg.message.indexOf('location') == -1">
+          <div class="msg-content" *ngIf="msg.message.indexOf('LatLong|') == -1">
               <span class="triangle"></span>
               <p class="line-breaker ">{{msg.message}}</p>
           </div>
-          <div class="msg-content" *ngIf="msg.message.indexOf('location') !== -1">
+          <div class="msg-content" *ngIf="msg.message.indexOf('LatLong|') !== -1">
             <span class="triangle"></span>
-            <button ion-button class="line-breaker" (click)="mapsPage(msg.message)">{{msg.message}}</button>
+            <button ion-button class="map-button" (click)="mapsPage(msg.message)">
+              <img class="map-button-image" src="assets/imgs/gmap.png">
+            </button>
           </div>
         </div>
       </div>

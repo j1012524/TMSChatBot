@@ -14,8 +14,10 @@ export class MapPage {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
   marker: any;
+  currentLocation: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.currentLocation = navParams.get('loc');
   }
 
   ionViewDidLoad() {
@@ -23,7 +25,7 @@ export class MapPage {
   }
 
   loadMap(){
-    let latLng = new google.maps.LatLng(-34.9290, 138.6010);
+    let latLng = new google.maps.LatLng(this.currentLocation.split('|')[1].split('\n')[0], this.currentLocation.split('|')[1].split('\n')[1]);
     let mapOptions = {
       center: latLng,
       zoom: 15,
