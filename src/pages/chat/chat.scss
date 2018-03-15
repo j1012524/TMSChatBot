@@ -1,11 +1,28 @@
 page-chat {
 
+  .toolbar-background {
+    background-color: #00bfff !important;
+  }
+
+  .back-button-icon-md {
+    color: white;
+  }
+
+  .toolbar-title-md {
+    color:white;
+    font-size: 18px;
+    font-weight: normal;
+  }
+
   ion-title {
     float: left;
   }
 
   .logout {
     float:right;
+    color:black;
+    background-color: white;
+    text-transform: none;
   }
 
   $userBackgroundColor: #387ef5;

@@ -1,4 +1,17 @@
 page-map {
+  .toolbar-background {
+    background-color: #00bfff !important;
+  }
+
+  .back-button-icon-md {
+    color: white;
+  }
+
+  .toolbar-title-md {
+    color:white;
+    font-size: 18px;
+    font-weight: normal;
+  }
   #map {
     position: absolute;
     width: 90%;
